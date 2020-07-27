@@ -7,19 +7,15 @@ const loader = document.getElementById('loader');
 
 //Get Quote from Api
 const getQuote = async () => {
+	//Showing loader and removing quote container
+
+	quoteContainer.style.display = 'none';
+	loader.style.display = 'block';
 	const apiUrl = 'http://quotes.stormconsultancy.co.uk/random.json';
 	try {
-		//Showing loader and removing quote container
-		quoteContainer.style.display = 'none';
-		loader.style.display = 'block';
-
 		//Getting Data from api
 		const response = await fetch(apiUrl);
 		const data = await response.json();
-
-		//Removing loader and showing quote container
-		loader.style.display = 'none';
-		quoteContainer.style.display = 'block';
 
 		//Setting quote details in quote container
 		if (data.quote.length > 120) {
@@ -29,8 +25,12 @@ const getQuote = async () => {
 		}
 		quoteAuthor.textContent = data.author;
 		quoteText.textContent = data.quote;
+
+		//Removing loader and showing quote container
+		loader.style.display = 'none';
+		quoteContainer.style.display = 'block';
 	} catch (err) {
-		getQuote();
+		console.log(err);
 	}
 };
 
